@@ -1,11 +1,24 @@
-import React from 'react';
-import { Button, Htag, P, Tag } from '../components';
+import React, { useEffect, useState } from 'react';
+import { Button, Htag, P, Rating, Tag } from '../components';
+import { withLayout } from '../layout/Layout';
 
-export default function Home(): JSX.Element {
+function Home(): JSX.Element {
+  const [counter, setCounter] = useState<number>(0);
+  useEffect(() => {
+    console.log('counter = ' + counter);
+    return () => {
+      console.log('unmount');
+    };
+  }, []);
+  const [rating, setRating] = useState<number>(4);
   return (
     <>
-      <Htag tag='h3'>Теск</Htag>
-      <Button appearance='primary' arrow='right'>
+      <Htag tag='h3'>{counter}</Htag>
+      <Button
+        appearance='primary'
+        arrow='right'
+        onClick={() => setCounter((x) => x + 1)}
+      >
         Кнопка
       </Button>
       <Button appearance='ghost' arrow='down'>
@@ -22,6 +35,9 @@ export default function Home(): JSX.Element {
         Green
       </Tag>
       <Tag color='primary'>Green</Tag>
+      <Rating rating={rating} isEditable setRating={setRating} />
     </>
   );
 }
+
+export default withLayout(Home);
